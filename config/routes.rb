@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
@@ -13,18 +14,17 @@ Rails.application.routes.draw do
 
   # Example resource route (maps HTTP verbs to controller actions automatically):
   #   resources :products
-
+  # get 'restaurants' => 'restaurants#index'
   # Example resource route with options:
-  #   resources :products do
-  #     member do
-  #       get 'short'
-  #       post 'toggle'
-  #     end
+    resources :restaurants # do
+      # member do
+        # post 'toggle'
+      # end
   #
   #     collection do
   #       get 'sold'
   #     end
-  #   end
+    # end
 
   # Example resource route with sub-resources:
   #   resources :products do
