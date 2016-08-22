@@ -1,2 +1,0 @@
-# Yelp Clone
-
