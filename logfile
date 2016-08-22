@@ -1,0 +1,13 @@
+LOG:  database system was shut down at 2016-08-22 10:42:41 CDT
+LOG:  MultiXact member wraparound protections are now enabled
+LOG:  database system is ready to accept connections
+LOG:  autovacuum launcher started
+FATAL:  database "Nomi" does not exist
+FATAL:  database "Nomi" does not exist
+ERROR:  database "nomi" already exists
+STATEMENT:  CREATE DATABASE Nomi;
+FATAL:  database "Nomi" does not exist
+LOG:  autovacuum launcher shutting down
+LOG:  received smart shutdown request
+LOG:  shutting down
+LOG:  database system is shut down
