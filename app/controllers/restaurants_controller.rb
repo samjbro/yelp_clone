@@ -1,6 +1,6 @@
 class RestaurantsController < ApplicationController
 def index
-  "Hello from index"
+  raise "Hello from index"
 end
 
 end
