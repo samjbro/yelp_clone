@@ -3,6 +3,12 @@
     <h2>
       <%= link_to restaurant.name, restaurant_path(restaurant) %>
       <%= restaurant.description %><br>
+      <ul>
+      <% restaurant.reviews.all.each do |review| %>
+         <li><%= review.thoughts %></li>
+      <% end %>
+    </ul>
+      <%= link_to "Review #{restaurant.name}", new_restaurant_review_path(restaurant) %><br>
       <%= link_to "Edit #{restaurant.name}", edit_restaurant_path(restaurant) %><br>
       <%= link_to "Delete #{restaurant.name}", restaurant_path(restaurant), method: :delete %>
     </h2>
