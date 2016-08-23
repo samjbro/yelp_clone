@@ -30,8 +30,21 @@ feature 'restaurants' do
       click_link 'Add a restaurant'
       fill_in 'Name', with: 'Salad Boutique'
       click_button 'Create Restaurant'
-      expect(current_path).to eq '/restaurants'
       expect(page).to have_content('Salad Boutique')
+      expect(current_path).to eq '/restaurants'
+
+    end
+  end
+
+  context 'viewing restaurants' do
+
+    let!(:salad_boutique){ Restaurant.create(name: 'Salad Boutique') }
+
+    scenario 'lets a user view a restaurant' do
+      visit '/restaurants'
+      click_link 'Salad Boutique'
+      expect(page).to have_content 'Salad Boutique'
+      expect(current_path).to eq "/restaurants/#{salad_boutique.id}"
     end
   end
 end
