@@ -39,6 +39,7 @@ group :development, :test do
   gem 'byebug', platform: :mri
   gem 'rspec-collection_matchers'
   gem 'dotenv-rails'
+  gem 'shoulda-matchers'
 end
 
 group :development do

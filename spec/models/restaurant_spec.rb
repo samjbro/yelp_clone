@@ -14,4 +14,8 @@ RSpec.describe Restaurant, type: :model do
     expect(restaurant).to have(1).error_on(:name)
   end
 
+  it { should belong_to :user }
+
+  it { should have_many :reviews }
+
 end
