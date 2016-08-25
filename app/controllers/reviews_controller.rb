@@ -1,5 +1,9 @@
 class ReviewsController < ApplicationController
 
+  def index
+    @reviews = Review.all
+  end
+
   def new
     @restaurant = Restaurant.find(params[:restaurant_id])
     @review = Review.new
@@ -18,6 +22,17 @@ class ReviewsController < ApplicationController
         render :new
       end
     end
+  end
+
+  def destroy
+    @review = Review.where(user_id: current_user.id, restaurant_id: params[:id].to_i)
+    unless @review.empty?
+      Review.destroy(@review.first.id)
+      flash[:notice] = 'Review deleted successfully'
+    else
+      flash[:notice] = 'You cannot delete a review that you did not write'
+    end
+    redirect_to '/restaurants'
   end
 
   private

@@ -17,6 +17,7 @@
     <% end %>
     <%= notice %>
     <%= alert %>
+    <%= console if ENV['RAILS_ENV'] == 'development' %>
     <%= yield %>
   </body>
 </html>
