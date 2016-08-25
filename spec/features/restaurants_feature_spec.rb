@@ -26,7 +26,6 @@ feature 'restaurants' do
     scenario 'prompt users to fill out a form, and then display the results' do
       sign_up
       create_restaurant
-      click_button 'Create Restaurant'
       expect(page).to have_content 'KFC'
       expect(current_path).to eq '/restaurants'
     end
@@ -39,8 +38,7 @@ feature 'restaurants' do
 
     scenario "signed in user creating a restaurant increases count by 1" do
       sign_up
-      create_restaurant
-      expect{click_button 'Create Restaurant'}.to change(Restaurant, :count).by(1)
+      expect{create_restaurant}.to change(Restaurant, :count).by(1)
     end
 
     context 'an invalid restaurant' do
@@ -79,14 +77,14 @@ feature 'restaurants' do
   end
 
   context 'editing restaurants' do
-      before do
-        user = User.create!(password: '123456', email: 'brandnewuser@test.com')
-        user.restaurants.create name: 'KFC', description: 'Deep fried goodness'
-      end
+      # before do
+      #   user = User.create!(password: '123456', email: 'brandnewuser@test.com')
+      #   user.restaurants.create name: 'KFC', description: 'Deep fried goodness'
+      # end
 
       scenario 'lets a user edit a restaurant' do
         sign_up
-        visit '/restaurants'
+        create_restaurant
         click_link 'Edit KFC'
         fill_in 'Name', with: 'Kentucky Fried Chicken'
         fill_in 'Description', with: 'Deep fried goodness'
@@ -98,13 +96,10 @@ feature 'restaurants' do
   end
 
   context 'deleting restaurants' do
-    before do
-      user = User.create!(password: '123456', email: 'brandnewuser@test.com')
-      user.restaurants.create name: 'KFC', description: 'Deep fried goodness'
-    end
+
     scenario 'removes a restaurant when user clicks delete link' do
       sign_up
-      visit '/restaurants'
+      create_restaurant
       click_link 'Delete KFC'
       expect(page).not_to have_content 'KFC'
       expect(page).to have_content 'Restaurant deleted successfully'
