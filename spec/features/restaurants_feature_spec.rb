@@ -11,7 +11,8 @@ feature 'restaurants' do
 
   context 'restaurants have been added' do
     before do
-      Restaurant.create(name: 'KFC')
+      user = User.create!(password: '123456', email: 'brandnewuser@test.com')
+      user.restaurants.create(name: 'KFC')
     end
 
     scenario 'display restaurants' do
