@@ -1,2 +1,5 @@
-test:
-  id: 1
+test1:
+  email: 'test1@test.com'
+
+test2:
+  email: 'test2@test.com'

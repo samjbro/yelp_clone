@@ -1,5 +1,11 @@
-burger_king:
+burger_king1:
   thoughts: delicious
+  rating: 5
+  restaurant: burger_king
+  user: test1
+
+burger_king2:
+  thoughts: mediocre
   rating: 3
   restaurant: burger_king
-  user: test
+  user: test2

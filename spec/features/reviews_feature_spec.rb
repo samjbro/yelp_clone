@@ -7,14 +7,20 @@ feature 'reviewing: ' do
   scenario 'allows users to leave a review using a form' do
     sign_up
     create_restaurant(name: 'KFC')
-    expect{create_a_review(restaurant: 'KFC')}.to change(Review, :count).by(1)
+    expect{leave_review(restaurant: 'KFC')}.to change(Review, :count).by(1)
+  end
+
+  scenario 'displays an average rating for all reviews' do
+    visit '/restaurants'
+    click_link 'Burger King'
+    expect(page).to have_content('Average rating: 4')
   end
 
   context 'user has created a review' do
     before(:each) do
       sign_up
       create_restaurant(name: 'KFC')
-      create_a_review(restaurant: 'KFC')
+      leave_review(restaurant: 'KFC')
     end
     scenario 'users can delete their review' do
       click_link 'KFC'
