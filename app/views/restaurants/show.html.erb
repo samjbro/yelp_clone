@@ -3,7 +3,9 @@
 <ul>
 <% @restaurant.reviews.all.each do |review| %>
    <li><%= review.thoughts %>
+   <% if current_user %>
    <%= (link_to "Delete Review", restaurant_review_path(review), method: :delete) if review.user_id == current_user.id%>
+   <% end %>
    </li>
 <% end %>
 </ul>

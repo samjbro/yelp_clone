@@ -7,8 +7,15 @@ def sign_up
   click_button 'Sign up'
 end
 
-def create_restaurant
+def create_restaurant(name: 'KFC')
   click_link 'Add a restaurant'
-  fill_in 'Name', with: 'KFC'
+  fill_in 'Name', with: name
   click_button 'Create Restaurant'
+end
+
+def create_a_review(restaurant: 'KFC')
+  click_link 'Review ' + restaurant
+  fill_in 'Thoughts', with: 'so so'
+  select '3', from: 'Rating'
+  click_button 'Leave Review'
 end

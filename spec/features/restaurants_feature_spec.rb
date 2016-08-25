@@ -1,23 +1,13 @@
 require 'rails_helper'
 
 feature 'restaurants' do
-
-  context 'when there are no restaurants' do
-    scenario 'should have a prompt to add a restaurant' do
-      visit '/restaurants'
-      expect(page).to have_content 'No restaurants yet'
-      expect(page).to have_link 'Add a restaurant'
-    end
-  end
+  fixtures :restaurants
 
   context 'restaurants have been added' do
-    before do
-      user = User.create!(password: '123456', email: 'brandnewuser@test.com')
-      user.restaurants.create(name: 'KFC')
-    end
+
     scenario 'display restaurants' do
       visit '/restaurants'
-      expect(page).to have_content('KFC')
+      expect(page).to have_content('Burger King')
       expect(page).not_to have_content('No restaurants yet')
     end
   end
@@ -54,35 +44,19 @@ feature 'restaurants' do
     end
   end
 
-  xcontext 'view restaurants' do
+  context 'view restaurants' do
     scenario 'lets a user view a restaurant' do
-      FactoryGirl.define do
-        factory :restaurant do
-          association user
-          name 'KFC'
-        end
-        factory :user do
-          email 'test@somewhere.com'
-          password 'abcdefgh'
-          sequence(:id) { |id| id }
-        end
-      end
-      user = create :user
-      kfc = create(:restaurant, user: user)
+      restaurant = restaurants(:burger_king)
       visit '/restaurants'
-      click_link 'KFC'
-      expect(page).to have_content 'KFC'
-      expect(current_path).to eq "/restaurants/#{kfc.id}"
+      click_link 'Burger King'
+      expect(page).to have_content 'Burger King'
+      expect(current_path).to eq "/restaurants/#{restaurant.id}"
     end
   end
 
   context 'editing restaurants' do
-      # before do
-      #   user = User.create!(password: '123456', email: 'brandnewuser@test.com')
-      #   user.restaurants.create name: 'KFC', description: 'Deep fried goodness'
-      # end
 
-      scenario 'lets a user edit a restaurant' do
+      scenario 'lets a user edit a restaurant that they have created' do
         sign_up
         create_restaurant
         click_link 'Edit KFC'
@@ -93,16 +67,24 @@ feature 'restaurants' do
         expect(page).to have_content 'Deep fried goodness'
         expect(current_path).to eq '/restaurants'
       end
+      scenario 'does not let a user edit a restaurant that they have not created' do
+        sign_up
+        expect(page).not_to have_content 'Edit Burger King'
+      end
   end
 
   context 'deleting restaurants' do
-
-    scenario 'removes a restaurant when user clicks delete link' do
+    scenario 'lets a user delete a restaurant that they have created' do
       sign_up
       create_restaurant
       click_link 'Delete KFC'
       expect(page).not_to have_content 'KFC'
       expect(page).to have_content 'Restaurant deleted successfully'
+    end
+    scenario 'does not let a user delete a restaurant that they have not created' do
+      sign_up
+      create_restaurant
+      expect(page).not_to have_content 'Delete Pizza Hut'
     end
   end
 
