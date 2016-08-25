@@ -8,7 +8,9 @@
          <li><%= review.thoughts %></li>
       <% end %>
     </ul>
+      <% unless (current_user.nil?) || (current_user.has_reviewed? restaurant) %>
       <%= link_to "Review #{restaurant.name}", new_restaurant_review_path(restaurant) %><br>
+      <% end %>
       <%= link_to "Edit #{restaurant.name}", edit_restaurant_path(restaurant) %><br>
       <%= link_to "Delete #{restaurant.name}", restaurant_path(restaurant), method: :delete %>
     </h2>
