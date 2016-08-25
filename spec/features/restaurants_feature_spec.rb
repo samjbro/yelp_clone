@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 feature 'restaurants' do
+
   context 'when there are no restaurants' do
     scenario 'should have a prompt to add a restaurant' do
       visit '/restaurants'
@@ -14,7 +15,6 @@ feature 'restaurants' do
       user = User.create!(password: '123456', email: 'brandnewuser@test.com')
       user.restaurants.create(name: 'KFC')
     end
-
     scenario 'display restaurants' do
       visit '/restaurants'
       expect(page).to have_content('KFC')
@@ -56,9 +56,21 @@ feature 'restaurants' do
     end
   end
 
-  context 'view restaurants' do
-    let!(:kfc) { Restaurant.create(name: 'KFC') }
+  xcontext 'view restaurants' do
     scenario 'lets a user view a restaurant' do
+      FactoryGirl.define do
+        factory :restaurant do
+          association user
+          name 'KFC'
+        end
+        factory :user do
+          email 'test@somewhere.com'
+          password 'abcdefgh'
+          sequence(:id) { |id| id }
+        end
+      end
+      user = create :user
+      kfc = create(:restaurant, user: user)
       visit '/restaurants'
       click_link 'KFC'
       expect(page).to have_content 'KFC'
@@ -67,7 +79,10 @@ feature 'restaurants' do
   end
 
   context 'editing restaurants' do
-      before { Restaurant.create name: 'KFC', description: 'Deep fried goodness' }
+      before do
+        user = User.create!(password: '123456', email: 'brandnewuser@test.com')
+        user.restaurants.create name: 'KFC', description: 'Deep fried goodness'
+      end
 
       scenario 'lets a user edit a restaurant' do
         sign_up
@@ -83,7 +98,10 @@ feature 'restaurants' do
   end
 
   context 'deleting restaurants' do
-    before { Restaurant.create name: 'KFC', description: 'Deep fried goodness' }
+    before do
+      user = User.create!(password: '123456', email: 'brandnewuser@test.com')
+      user.restaurants.create name: 'KFC', description: 'Deep fried goodness'
+    end
     scenario 'removes a restaurant when user clicks delete link' do
       sign_up
       visit '/restaurants'

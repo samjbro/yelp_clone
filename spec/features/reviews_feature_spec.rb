@@ -2,7 +2,10 @@ require 'rails_helper'
 require_relative 'helpers/sign_in_helper'
 
 feature 'reviewing' do
-  before { Restaurant.create name: 'KFC' }
+  before do
+    user = User.create!(password: '123456', email: 'brandnewuser@test.com')
+    user.restaurants.create name: 'KFC'
+  end
 
   scenario 'allows users to leave a review using a form' do
     sign_up

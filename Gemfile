@@ -40,6 +40,7 @@ group :development, :test do
   gem 'rspec-collection_matchers'
   gem 'dotenv-rails'
   gem 'shoulda-matchers'
+  gem 'factory_girl_rails', '~> 4.0'
 end
 
 group :development do
